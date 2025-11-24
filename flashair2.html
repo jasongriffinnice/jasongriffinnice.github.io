@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FlashAir • Fly Smarter with Your Virtual Pilot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --fa-navy: #002b5c;
+      --fa-navy-soft: #093a78;
+      --fa-gold: #ffcc00;
+      --fa-sky: #e7f3ff;
+      --fa-light: #f4f6f9;
+      --fa-text: #132033;
+      --fa-white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--fa-light);
+      color: var(--fa-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVBAR */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 7vw;
+      background: rgba(0, 18, 40, 0.96);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .nav-logo-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      object-fit: contain;
+      background: #00152d;
+      padding: 2px;
+    }
+
+    .nav-brand-text {
+      display: flex;
+      flex-direction: column;
+      color: var(--fa-white);
+    }
+
+    .nav-brand-text span:first-child {
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .nav-brand-text span:last-child {
+      font-size: 0.72rem;
+      opacity: 0.75;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      font-size: 0.9rem;
+      color: #d7e4ff;
+    }
+
+    .nav-link {
+      opacity: 0.86;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+    }
+
+    .nav-cta {
+      padding: 0.55rem 1.3rem;
+      border-radius: 999px;
+      border: 1px solid var(--fa-gold);
+      background: var(--fa-gold);
+      color: #1b2433;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    /* HERO */
+    .hero {
+      padding: 2.8rem 7vw 3.4rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 3rem;
+      align-items: center;
+      background: radial-gradient(
+        circle at 10% 0%,
+        #ffffff 0%,
+        #e7f3ff 40%,
+        #d6e5ff 100%
+      );
+      border-bottom: 1px solid rgba(0, 42, 92, 0.1);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      padding: 0.18rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 43, 92, 0.25);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(255, 255, 255, 0.86);
+      color: #1e3350;
+    }
+
+    .badge--gold {
+      border-color: var(--fa-gold);
+      background: #fff7d6;
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 3.2vw + 1rem, 3.4rem);
+      line-height: 1.1;
+      color: var(--fa-navy);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-title span {
+      color: var(--fa-gold);
+    }
+
+    .hero-subtitle {
+      font-size: 1.02rem;
+      max-width: 32rem;
+      margin-bottom: 1.8rem;
+      opacity: 0.9;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn-primary {
+      padding: 0.9rem 1.9rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--fa-navy-soft);
+      color: var(--fa-white);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 14px 26px rgba(0, 43, 92, 0.5);
+    }
+
+    .btn-secondary {
+      padding: 0.86rem 1.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(0, 43, 92, 0.32);
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--fa-navy-soft);
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+    }
+
+    .hero-note {
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
+
+    /* HERO RIGHT – assistant card + plane art */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+
+    .assistant-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background: linear-gradient(145deg, #022448 0%, #074b92 50%, #1ca0ff 100%);
+      color: var(--fa-white);
+      padding: 1.5rem 1.6rem 1.7rem;
+      box-shadow: 0 18px 40px rgba(0, 24, 59, 0.7);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .assistant-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.85);
+      background: rgba(0, 0, 0, 0.15);
+    }
+
+    .assistant-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .assistant-copy h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .assistant-copy p {
+      font-size: 0.88rem;
+      opacity: 0.9;
+      margin-bottom: 0.45rem;
+    }
+
+    .assistant-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+    }
+
+    .assistant-tag {
+      padding: 0.12rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .plane-hero {
+      border-radius: 18px;
+      padding: 1rem 1.1rem;
+      background: var(--fa-white);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .plane-hero-image {
+      flex: 0 0 40%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #f5f7fb;
+    }
+
+    .plane-hero-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .plane-hero-copy {
+      flex: 1;
+      font-size: 0.88rem;
+    }
+
+    .plane-hero-copy h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--fa-navy);
+      margin-bottom: 0.3rem;
+    }
+
+    .plane-hero-copy p {
+      opacity: 0.85;
+    }
+
+    /* TOOLS STRIP */
+    .tools-strip {
+      padding: 0.9rem 7vw;
+      background: #00162f;
+      color: #dfe8ff;
+      font-size: 0.82rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tools-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.75;
+    }
+
+    .tools-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .chip {
+      padding: 0.15rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      cursor: pointer;
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 2.8rem 7vw 3.2rem;
+      background: var(--fa-light);
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .features-header h2 {
+      font-size: 1.7rem;
+      color: var(--fa-navy);
+      margin-bottom: 0.4rem;
+    }
+
+    .features-header p {
+      font-size: 0.96rem;
+      opacity: 0.8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.6rem;
+    }
+
+    .feature-card {
+      background: var(--fa-white);
+      border-radius: 18px;
+      padding: 1.4rem 1.3rem 1.5rem;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-pill {
+      display: inline-block;
+      padding: 0.14rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0, 43, 92, 0.07);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.55rem;
+      color: var(--fa-navy-soft);
+    }
+
+    .feature-title {
+      font-weight: 600;
+      color: var(--fa-navy-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .feature-icon {
+      position: absolute;
+      right: 0.9rem;
+      top: 0.9rem;
+      font-size: 1.1rem;
+      opacity: 0.25;
+    }
+
+    /* DESTINATIONS */
+    .destinations {
+      padding: 2.4rem 7vw 2.8rem;
+      background: #ffffff;
+      border-top: 1px solid rgba(15, 23, 42, 0.07);
+      border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+    }
+
+    .destinations-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .destinations-header h3 {
+      font-size: 1.25rem;
+      color: var(--fa-navy);
+    }
+
+    .destinations-header span {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .dest-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .dest-card {
+      flex: 1 1 180px;
+      min-width: 160px;
+      max-width: 220px;
+      border-radius: 16px;
+      background: var(--fa-light);
+      padding: 0.9rem 1rem;
+    }
+
+    .dest-city {
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+      color: var(--fa-navy-soft);
+    }
+
+    .dest-code {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      opacity: 0.8;
+      margin-bottom: 0.3rem;
+    }
+
+    .dest-meta {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 1.2rem 7vw 1.8rem;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      opacity: 0.75;
+      background: #00162f;
+      color: #d6e3ff;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 2.1rem;
+      }
+      .hero-right {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        padding-inline: 5vw;
+      }
+      .nav-links {
+        display: none;
+      }
+      .hero,
+      .features,
+      .destinations {
+        padding-inline: 5vw;
+      }
+      .feature-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .dest-grid {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-left">
+      <!-- FlashAir logo -->
+      <img
+        src="https://jasongriffinnice.github.io/airlinelogo.png"
+        alt="FlashAir logo"
+        class="nav-logo-img"
+      />
+      <div class="nav-brand-text">
+        <span>FlashAir</span>
+        <span>Smarter journeys in the sky</span>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <span class="nav-link">Book</span>
+      <span class="nav-link">Manage booking</span>
+      <span class="nav-link">Flight status</span>
+      <span class="nav-link">Help &amp; support</span>
+      <button class="nav-cta" onclick="window.flashAirOpenChat?.()">
+        Chat with our assistant
+      </button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <section>
+      <div class="hero-badge-row">
+        <span class="badge">Global network</span>
+        <span class="badge badge--gold">Virtual pilot on board</span>
+        <span class="badge">24/7 digital support</span>
+      </div>
+      <h1 class="hero-title">
+        Fly with <span>FlashAir</span> and let our virtual pilot handle the details.
+      </h1>
+      <p class="hero-subtitle">
+        Change flights, check baggage, track your aircraft and get digital
+        boarding passes — right from our smart chat assistant.
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="window.flashAirOpenChat?.()">
+          Open FlashAir Assistant
+        </button>
+        <button class="btn-secondary" onclick="window.flashAirOpenChat?.()">
+          Check my flight status
+        </button>
+      </div>
+      <p class="hero-note">
+        Ask about flight changes, baggage rules, upgrades or arrivals and our assistant will guide you step by step.
+      </p>
+    </section>
+
+    <!-- HERO RIGHT: assistant card + plane art -->
+    <aside class="hero-right">
+      <div class="assistant-card">
+        <div class="assistant-avatar">
+          <!-- Use your Charlie avatar here -->
+          <img
+            src="https://jasongriffinnice.github.io/pilotavatar.png"
+            alt="Charlie, your virtual pilot"
+          />
+        </div>
+        <div class="assistant-copy">
+          <h2>Hi, I’m Charlie.</h2>
+          <p>
+            Your virtual assistant pilot. I can help you manage your journey from
+            booking to boarding.
+          </p>
+          <div class="assistant-tags">
+            <span class="assistant-tag">Flight changes</span>
+            <span class="assistant-tag">Baggage</span>
+            <span class="assistant-tag">Boarding passes</span>
+            <span class="assistant-tag">Live updates</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="plane-hero">
+        <div class="plane-hero-image">
+          <!-- Use your animated plane GIF or static plane image here -->
+          <img
+            src="https://jasongriffinnice.github.io/FlasAirAircraft.png"
+            alt="FlashAir aircraft"
+          />
+        </div>
+        <div class="plane-hero-copy">
+          <h3>Built around real journeys</h3>
+          <p>
+            From check-in reminders to last-minute gate changes, FlashAir keeps
+            you informed and in control, wherever you’re flying.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- TOOLS STRIP -->
+  <section class="tools-strip">
+    <span class="tools-label">Self-service tools</span>
+    <div class="tools-chips">
+      <div class="chip" onclick="window.flashAirOpenChat?.()">Change my flight</div>
+      <div class="chip" onclick="window.flashAirOpenChat?.()">Baggage allowance</div>
+      <div class="chip" onclick="window.flashAirOpenChat?.()">Flight status</div>
+      <div class="chip" onclick="window.flashAirOpenChat?.()">Talk to an agent</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="features-header">
+      <h2>Your airline, upgraded with intelligent service.</h2>
+      <p>
+        FlashAir combines great cabins and great technology so you can manage
+        your trip in the way that suits you best.
+      </p>
+    </div>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="feature-icon">✈︎</div>
+        <div class="feature-pill">Flight changes</div>
+        <div class="feature-title">Rebook without the call centre</div>
+        <p>
+          Review alternative flights, confirm your choice and update your booking
+          directly in chat — including seats and special requests.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🧳</div>
+        <div class="feature-pill">Baggage</div>
+        <div class="feature-title">Clear baggage guidance</div>
+        <p>
+          Get personalised baggage information for your fare, route and cabin,
+          with simple explanations and optional visual charts.
+        </p>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">🎫</div>
+        <div class="feature-pill">Boarding passes</div>
+        <div class="feature-title">Digital passes, always handy</div>
+        <p>
+          Receive secure digital boarding passes directly in chat or by email so
+          everything you need for departure is in one place.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- DESTINATIONS -->
+  <section class="destinations">
+    <div class="destinations-header">
+      <h3>Popular FlashAir routes</h3>
+      <span>From business hubs to city breaks, explore our most loved journeys.</span>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card">
+        <div class="dest-city">Glasgow → New Orleans</div>
+        <div class="dest-code">GLA • MSY</div>
+        <div class="dest-meta">
+          Connect Europe with the heart of Louisiana on our long-haul services.
+        </div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-city">San Francisco → Chicago</div>
+        <div class="dest-code">SFO • ORD</div>
+        <div class="dest-meta">
+          Cross-country convenience with multiple daily departures.
+        </div>
+      </div>
+      <div class="dest-card">
+        <div class="dest-city">Frankfurt → Dubai</div>
+        <div class="dest-code">FRA • DXB</div>
+        <div class="dest-meta">
+          Seamless connections between Europe and the Middle East.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© 2025 FlashAir. All rights reserved.</span>
+    <span>FlashAir • Smarter journeys in the sky</span>
+  </footer>
+
+<script src="https://github.com/Cognigy/Webchat/releases/latest/download/webchat.js"></script>
+<script>
+	initWebchat(
+		"https://endpoint-trial.cognigy.ai/235a817235798fbed1b5b6d747da06e86633560af80834c458a3deda0cd9b8ad"
+	);
+</script>
+  -->
+
+</body>
+</html>
