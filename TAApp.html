@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Home Telecom – Choose Products</title>
+
+  <script src="/sdk/app-page-sdk.js"></script>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#f6f8fb;
+      --stroke:#e6edf5;
+      --text:#0f172a;
+      --muted:#64748b;
+
+      --brandA:#14b8a6;
+      --brandB:#0ea5e9;
+      --shadow: 0 10px 25px rgba(15,23,42,.08);
+      --radius: 18px;
+      --radius2: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(900px 500px at 20% 0%, rgba(20,184,166,.12), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(14,165,233,.12), transparent 60%),
+        var(--bg);
+      color: var(--text);
+    }
+
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:14px 14px 40px;
+    }
+
+    .top{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px;
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg,#fff,var(--panel));
+      box-shadow:var(--shadow);
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .logoBox{
+      width:56px;
+      height:56px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:#fff;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+    }
+
+    .logoBox img{
+      width:92px;
+      height:auto;
+    }
+
+    h1{
+      margin:0;
+      font-size:16px;
+    }
+
+    .sub{
+      margin:4px 0 0;
+      font-size:12.5px;
+      color:var(--muted);
+    }
+
+    .row{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+
+    .search{
+      flex:1 1 240px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:#fff;
+    }
+
+    .search input{
+      border:0;
+      outline:0;
+      width:100%;
+      font-size:14px;
+    }
+
+    .filters{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .chip{
+      border:1px solid var(--stroke);
+      background:#fff;
+      padding:10px 12px;
+      border-radius:999px;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .chip.active{
+      border-color:rgba(14,165,233,.45);
+      background:rgba(14,165,233,.08);
+      font-weight:700;
+    }
+
+    .topSubmit{
+      margin-top:12px;
+      border:1px solid var(--stroke);
+      background:#fff;
+      border-radius:var(--radius2);
+      padding:12px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      box-shadow:0 8px 18px rgba(15,23,42,.05);
+    }
+
+    .miniBtn{
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:14px 16px;
+      font-weight:900;
+      font-size:14px;
+      color:#fff;
+      background:linear-gradient(135deg,var(--brandA),var(--brandB));
+      min-width:180px;
+    }
+
+    .miniBtn:disabled{
+      opacity:.5;
+      cursor:not-allowed;
+    }
+
+    .carousel{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+      padding:4px 2px 12px;
+      margin-top:12px;
+    }
+
+    .product{
+      scroll-snap-align:start;
+      flex:0 0 88%;
+      max-width:520px;
+      border-radius:var(--radius);
+      border:1px solid var(--stroke);
+      background:#fff;
+      box-shadow:var(--shadow);
+      padding:14px;
+      position:relative;
+    }
+
+    .stripe{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:6px;
+      background:linear-gradient(90deg,var(--brandA),var(--brandB));
+      border-radius:var(--radius) var(--radius) 0 0;
+    }
+
+    .pTop{
+      display:flex;
+      gap:12px;
+      margin-top:10px;
+    }
+
+    .pIcon{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,rgba(20,184,166,.14),rgba(14,165,233,.12));
+      font-size:22px;
+    }
+
+    .pTitle{ margin:0; font-size:15px; }
+
+    .pDesc{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:12.6px;
+    }
+
+    .bullets{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:8px;
+    }
+
+    .bullets li{
+      display:flex;
+      gap:10px;
+      padding:10px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background:var(--panel);
+      font-size:12.8px;
+    }
+
+    .tick{
+      font-weight:900;
+      color:#16a34a;
+    }
+
+    .selectBtn{
+      margin-top:12px;
+      border:0;
+      cursor:pointer;
+      border-radius:14px;
+      padding:14px 16px;
+      font-weight:900;
+      font-size:14px;
+      color:#fff;
+      width:100%;
+      background:linear-gradient(135deg,var(--brandA),var(--brandB));
+    }
+
+    .selected{
+      background:linear-gradient(135deg,#22c55e,var(--brandA));
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <div class="logoBox">
+        <img src="https://jasongriffinnice.github.io/hometelecomlogo.jpg" alt="Home Telecom">
+      </div>
+      <div>
+        <h1>Choose your product</h1>
+        <p class="sub">Select one or more products and submit back to your agent.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="search">
+      <input id="q" placeholder="Search products..." />
+    </div>
+    <div class="filters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="broadband">Broadband</button>
+      <button class="chip" data-filter="mobile">Mobile</button>
+      <button class="chip" data-filter="tv">TV</button>
+    </div>
+  </div>
+
+  <div class="topSubmit">
+    <div><b id="countLabel">0 selected</b></div>
+    <button class="miniBtn" id="submitBtn" disabled>Submit selection</button>
+  </div>
+
+  <div class="carousel" id="carousel"></div>
+
+</div>
+
+<script>
+const PRODUCTS = [
+  { id:"bb", category:"broadband", icon:"📶", title:"Broadband",
+    desc:"Fast home broadband options.",
+    bullets:["Check availability","Streaming ready","Reliable speeds"] },
+
+  { id:"sim", category:"mobile", icon:"📱", title:"Mobile SIM",
+    desc:"Flexible SIM-only plans.",
+    bullets:["Data bundles","No handset required","Quick activation"] },
+
+  { id:"skyq", category:"tv", icon:"📺", title:"Sky Q",
+    desc:"Entertainment packages.",
+    bullets:["Movies & Sport","Family content","Bundle options"] }
+];
+
+let selected = new Map();
+let activeFilter = "all";
+let query = "";
+
+const carousel = document.getElementById("carousel");
+const countLabel = document.getElementById("countLabel");
+const submitBtn = document.getElementById("submitBtn");
+
+function matches(p){
+  const fOk = activeFilter === "all" || p.category === activeFilter;
+  const qOk = !query || p.title.toLowerCase().includes(query);
+  return fOk && qOk;
+}
+
+function render(){
+  const items = PRODUCTS.filter(matches);
+
+  carousel.innerHTML = items.map(p=>{
+    const isSel = selected.has(p.id);
+    return `
+      <section class="product">
+        <div class="stripe"></div>
+        <div class="pTop">
+          <div class="pIcon">${p.icon}</div>
+          <div>
+            <p class="pTitle"><strong>${p.title}</strong></p>
+            <p class="pDesc">${p.desc}</p>
+          </div>
+        </div>
+        <ul class="bullets">
+          ${p.bullets.map(b=>`<li><span class="tick">✓</span>${b}</li>`).join("")}
+        </ul>
+        <button class="selectBtn ${isSel ? "selected":""}" data-id="${p.id}">
+          ${isSel ? "Selected ✓" : "Select"}
+        </button>
+      </section>
+    `;
+  }).join("");
+
+  countLabel.textContent = `${selected.size} selected`;
+  submitBtn.disabled = selected.size === 0;
+}
+
+carousel.addEventListener("click", e=>{
+  const btn = e.target.closest(".selectBtn");
+  if(!btn) return;
+  const id = btn.dataset.id;
+  if(selected.has(id)) selected.delete(id);
+  else selected.set(id,{id});
+  render();
+});
+
+document.getElementById("q").addEventListener("input", e=>{
+  query = e.target.value.toLowerCase();
+  render();
+});
+
+document.querySelectorAll(".chip").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    btn.classList.add("active");
+    activeFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+submitBtn.addEventListener("click", ()=>{
+  if(typeof window.SDK === "undefined") return;
+
+  window.SDK.submit({
+    action:"select_products",
+    selections:Array.from(selected.values()),
+    selectionCount:selected.size,
+    timestamp:new Date().toISOString()
+  });
+});
+
+render();
+</script>
+</body>
+</html>
