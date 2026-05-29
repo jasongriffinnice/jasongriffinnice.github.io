@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NiCE Utility — Powering a Smarter Future</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A1628;
+    --navy-mid: #112040;
+    --electric: #00C2FF;
+    --electric-dim: #00A3D9;
+    --green: #00D68F;
+    --green-dim: #00B87A;
+    --white: #FFFFFF;
+    --off-white: #F4F7FA;
+    --mid-gray: #8494A9;
+    --light-border: rgba(255,255,255,0.10);
+    --text-muted: #8494A9;
+    --card-bg: rgba(255,255,255,0.04);
+    --card-border: rgba(255,255,255,0.08);
+    --section-gap: 120px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--navy);
+    color: var(--white);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 72px;
+    background: rgba(10, 22, 40, 0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--light-border);
+    transition: background 0.3s;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--electric), var(--green));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; font-size: 14px;
+    color: var(--navy);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo-text {
+    font-family: var(--font-head); font-weight: 700; font-size: 18px;
+    letter-spacing: -0.3px;
+  }
+  .nav-logo-text span { color: var(--electric); }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 400; color: rgba(255,255,255,0.75);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    background: var(--electric);
+    color: var(--navy) !important;
+    font-weight: 600 !important;
+    padding: 9px 22px;
+    border-radius: 6px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--electric-dim) !important; }
+  .nav-mobile-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-mobile-toggle span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: 0.3s; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,194,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,194,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridFloat 20s linear infinite;
+  }
+  @keyframes gridFloat { 0% { transform: translateY(0); } 100% { transform: translateY(60px); } }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,194,255,0.12) 0%, transparent 70%);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
+  .hero-glow-2 {
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,214,143,0.10) 0%, transparent 70%);
+    bottom: -100px; left: 5%;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 760px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(0,194,255,0.10);
+    border: 1px solid rgba(0,194,255,0.25);
+    border-radius: 40px;
+    padding: 6px 16px;
+    font-size: 13px; font-weight: 500; color: var(--electric);
+    margin-bottom: 28px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--electric);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+  .hero h1 em { font-style: normal; color: var(--electric); }
+  .hero h1 .green { color: var(--green); }
+  .hero-sub {
+    font-size: 18px; font-weight: 300; color: rgba(255,255,255,0.70);
+    max-width: 560px; line-height: 1.65;
+    margin-bottom: 44px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+  .hero-actions {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--electric);
+    color: var(--navy);
+    font-family: var(--font-body); font-weight: 600; font-size: 15px;
+    padding: 14px 28px; border-radius: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--electric-dim); transform: translateY(-1px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent;
+    color: var(--white);
+    font-family: var(--font-body); font-weight: 500; font-size: 15px;
+    padding: 14px 28px; border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.20);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.50); background: rgba(255,255,255,0.05); }
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 72px;
+    padding-top: 40px;
+    border-top: 1px solid var(--light-border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+  .hero-stat-num {
+    font-family: var(--font-head); font-size: 36px; font-weight: 800;
+    color: var(--white); letter-spacing: -1px; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .hero-stat-num span { color: var(--electric); }
+  .hero-stat-label { font-size: 13px; color: var(--text-muted); }
+
+  .hero-visual {
+    position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+    width: min(480px, 42vw);
+    z-index: 1;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-visual-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 16px;
+  }
+  .energy-gauge-label { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .energy-gauge-bar { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+  .energy-gauge-fill { height: 100%; border-radius: 3px; }
+  .gauge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .gauge-row-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .gauge-row-val { font-size: 13px; font-weight: 600; }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--green); background: rgba(0,214,143,0.10);
+    border: 1px solid rgba(0,214,143,0.2); border-radius: 20px; padding: 3px 10px;
+    margin-bottom: 16px;
+  }
+  .live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
+  .mini-chart { display: flex; align-items: flex-end; gap: 4px; height: 50px; margin-top: 12px; }
+  .mini-bar {
+    flex: 1; border-radius: 3px 3px 0 0;
+    background: rgba(0,194,255,0.25);
+    transition: background 0.2s;
+  }
+  .mini-bar.active { background: var(--electric); }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── SECTIONS ─── */
+  section { padding: var(--section-gap) 5%; }
+  .section-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    color: var(--electric); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-head {
+    font-family: var(--font-head);
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 800; line-height: 1.1; letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.60);
+    max-width: 560px; line-height: 1.65;
+    margin-bottom: 56px;
+  }
+
+  /* ─── SERVICES ─── */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: border-color 0.25s, transform 0.25s, background 0.25s;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: rgba(0,194,255,0.30);
+    background: rgba(0,194,255,0.04);
+    transform: translateY(-4px);
+  }
+  .service-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+  }
+  .service-card h3 {
+    font-family: var(--font-head); font-size: 19px; font-weight: 700;
+    letter-spacing: -0.3px; margin-bottom: 10px;
+  }
+  .service-card p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+  .service-card .link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 500; color: var(--electric);
+    margin-top: 20px;
+  }
+  .service-card .link:hover { gap: 10px; }
+  .service-card .link svg { transition: transform 0.2s; }
+  .service-card:hover .link svg { transform: translateX(3px); }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section { background: rgba(255,255,255,0.018); border-top: 1px solid var(--light-border); border-bottom: 1px solid var(--light-border); }
+  .steps-container { display: flex; gap: 0; align-items: stretch; }
+  .step {
+    flex: 1; padding: 40px 36px;
+    border-right: 1px solid var(--light-border);
+    position: relative;
+  }
+  .step:last-child { border-right: none; }
+  .step-num {
+    font-family: var(--font-head); font-size: 48px; font-weight: 800;
+    color: rgba(0,194,255,0.15); line-height: 1; margin-bottom: 20px;
+    letter-spacing: -2px;
+  }
+  .step h3 { font-family: var(--font-head); font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; }
+
+  /* ─── TARIFFS ─── */
+  .tariffs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .tariff-card {
+    background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;
+    padding: 36px 32px; position: relative; overflow: hidden;
+    transition: transform 0.25s;
+  }
+  .tariff-card:hover { transform: translateY(-4px); }
+  .tariff-card.featured {
+    border-color: rgba(0,194,255,0.40);
+    background: rgba(0,194,255,0.05);
+  }
+  .tariff-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    background: var(--electric); color: var(--navy);
+    border-radius: 4px; padding: 4px 10px;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .tariff-name {
+    font-family: var(--font-head); font-size: 22px; font-weight: 800;
+    letter-spacing: -0.5px; margin-bottom: 8px;
+  }
+  .tariff-desc { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 28px; line-height: 1.5; }
+  .tariff-price {
+    margin-bottom: 28px; padding-bottom: 28px;
+    border-bottom: 1px solid var(--light-border);
+  }
+  .tariff-price-num {
+    font-family: var(--font-head); font-size: 42px; font-weight: 800;
+    color: var(--white); letter-spacing: -2px; line-height: 1;
+  }
+  .tariff-price-num sup { font-size: 22px; vertical-align: top; margin-top: 8px; display: inline-block; }
+  .tariff-price-period { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+  .tariff-features { list-style: none; }
+  .tariff-features li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px; color: rgba(255,255,255,0.75); margin-bottom: 12px;
+  }
+  .tariff-features li::before {
+    content: ''; display: block; width: 16px; height: 16px;
+    border-radius: 50%; flex-shrink: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%2300D68F' fill-opacity='0.2'/%3E%3Cpath d='M5 8l2.2 2.2L11 6' stroke='%2300D68F' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E") no-repeat center;
+  }
+  .tariff-cta {
+    display: block; text-align: center; margin-top: 28px;
+    padding: 12px; border-radius: 8px; font-weight: 600; font-size: 14px;
+    transition: all 0.2s;
+  }
+  .tariff-card:not(.featured) .tariff-cta {
+    border: 1px solid rgba(255,255,255,0.18); color: var(--white);
+  }
+  .tariff-card:not(.featured) .tariff-cta:hover { background: rgba(255,255,255,0.06); }
+  .tariff-card.featured .tariff-cta {
+    background: var(--electric); color: var(--navy);
+  }
+  .tariff-card.featured .tariff-cta:hover { background: var(--electric-dim); }
+
+  /* ─── SUSTAINABILITY ─── */
+  .sustain-section { background: rgba(0,214,143,0.02); border-top: 1px solid rgba(0,214,143,0.08); border-bottom: 1px solid rgba(0,214,143,0.08); }
+  .sustain-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .sustain-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sustain-metric {
+    background: rgba(0,214,143,0.06); border: 1px solid rgba(0,214,143,0.15);
+    border-radius: 12px; padding: 24px 20px;
+  }
+  .sustain-metric-num {
+    font-family: var(--font-head); font-size: 30px; font-weight: 800;
+    color: var(--green); letter-spacing: -1px; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .sustain-metric-label { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .sustain-text { }
+  .progress-items { margin-top: 32px; }
+  .progress-item { margin-bottom: 24px; }
+  .progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .progress-name { font-size: 14px; color: rgba(255,255,255,0.75); }
+  .progress-pct { font-size: 14px; font-weight: 600; color: var(--green); }
+  .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width 1.5s ease; }
+
+  /* ─── SMART TECH ─── */
+  .tech-grid { display: grid; grid-template-columns: 5fr 3fr; gap: 40px; align-items: start; }
+  .tech-features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  .tech-feature {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 12px; padding: 24px 20px;
+    transition: border-color 0.25s;
+  }
+  .tech-feature:hover { border-color: rgba(0,194,255,0.25); }
+  .tech-feature-icon { font-size: 22px; margin-bottom: 12px; }
+  .tech-feature h4 { font-family: var(--font-head); font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .tech-feature p { font-size: 13px; color: rgba(255,255,255,0.50); line-height: 1.55; }
+  .tech-dashboard {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 24px;
+    position: sticky; top: 100px;
+  }
+  .dash-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .dash-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); }
+  .dash-time { font-size: 11px; color: var(--text-muted); }
+  .dash-metric { display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px; }
+  .dash-metric-val { font-family: var(--font-head); font-size: 28px; font-weight: 800; letter-spacing: -1px; }
+  .dash-metric-sub { font-size: 12px; color: var(--text-muted); }
+  .dash-bar-group { margin-bottom: 10px; }
+  .dash-bar-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 11px; color: var(--text-muted); }
+  .dash-bar-track { height: 6px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+  .dash-bar-fill { height: 100%; border-radius: 3px; }
+  .divider { height: 1px; background: var(--light-border); margin: 16px 0; }
+
+  /* ─── TESTIMONIALS ─── */
+  .testimonials-track { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .testimonial-card {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    border-radius: 16px; padding: 28px 24px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .testimonial-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-3px); }
+  .stars { color: #FFB800; font-size: 14px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testimonial-text {
+    font-size: 14px; color: rgba(255,255,255,0.70); line-height: 1.7;
+    margin-bottom: 20px; font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .testimonial-name { font-size: 13px; font-weight: 600; }
+  .testimonial-role { font-size: 12px; color: var(--text-muted); }
+
+  /* ─── APP BANNER ─── */
+  .app-section {
+    background: linear-gradient(135deg, rgba(0,194,255,0.08) 0%, rgba(0,214,143,0.06) 100%);
+    border-top: 1px solid rgba(0,194,255,0.12); border-bottom: 1px solid rgba(0,194,255,0.12);
+  }
+  .app-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .app-features { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+  .app-feature { display: flex; align-items: flex-start; gap: 14px; }
+  .app-feature-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .app-feature-text h4 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .app-feature-text p { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .app-store-btns { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
+  .app-store-btn {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px; padding: 12px 20px;
+    transition: background 0.2s;
+  }
+  .app-store-btn:hover { background: rgba(255,255,255,0.12); }
+  .app-store-btn-icon { font-size: 22px; }
+  .app-store-btn-text { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.2; }
+  .app-store-btn-text strong { display: block; font-size: 14px; font-weight: 600; color: var(--white); }
+  .phone-mockup {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 36px; padding: 16px; max-width: 280px; margin: 0 auto;
+  }
+  .phone-screen {
+    background: var(--navy-mid); border-radius: 26px; padding: 20px;
+    min-height: 440px;
+  }
+  .phone-notch { width: 80px; height: 24px; background: var(--navy); border-radius: 12px; margin: 0 auto 20px; }
+  .phone-metric { margin-bottom: 16px; }
+  .phone-metric-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+  .phone-metric-val { font-family: var(--font-head); font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+  .phone-metric-val .unit { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+  .phone-chart { display: flex; align-items: flex-end; gap: 3px; height: 60px; margin: 16px 0; }
+  .phone-bar { flex: 1; border-radius: 3px 3px 0 0; }
+  .phone-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+  }
+  .phone-item-label { color: rgba(255,255,255,0.6); }
+  .phone-item-val { font-weight: 600; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(0,214,143,0.12); border: 1px solid rgba(0,214,143,0.2);
+    border-radius: 4px; padding: 2px 8px; font-size: 10px; color: var(--green); font-weight: 600;
+    margin-top: 4px;
+  }
+  .chip-neg { background: rgba(255,100,100,0.10); border-color: rgba(255,100,100,0.2); color: #FF6464; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: rgba(0,0,0,0.30);
+    border-top: 1px solid var(--light-border);
+    padding: 72px 5% 40px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 60px;
+  }
+  .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.65; margin-top: 16px; max-width: 280px; }
+  .footer-col h5 {
+    font-family: var(--font-head); font-size: 13px; font-weight: 700;
+    letter-spacing: 0.5px; margin-bottom: 16px;
+    color: rgba(255,255,255,0.5); text-transform: uppercase;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+  .footer-col a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 28px; border-top: 1px solid var(--light-border);
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-bottom p { font-size: 13px; color: rgba(255,255,255,0.30); }
+  .footer-bottom-links { display: flex; gap: 24px; }
+  .footer-bottom-links a { font-size: 13px; color: rgba(255,255,255,0.35); }
+  .footer-bottom-links a:hover { color: rgba(255,255,255,0.65); }
+  .social-links { display: flex; gap: 12px; margin-top: 20px; }
+  .social-link {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; transition: background 0.2s;
+  }
+  .social-link:hover { background: rgba(255,255,255,0.12); }
+
+  /* ─── TRUST BAR ─── */
+  .trust-bar {
+    padding: 32px 5%;
+    border-bottom: 1px solid var(--light-border);
+    display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    flex-wrap: wrap;
+  }
+  .trust-label { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+  .trust-logos { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+  .trust-logo {
+    font-family: var(--font-head); font-weight: 700; font-size: 14px;
+    color: rgba(255,255,255,0.25); letter-spacing: -0.3px;
+    transition: color 0.2s;
+  }
+  .trust-logo:hover { color: rgba(255,255,255,0.5); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .hero-visual { display: none; }
+    .hero-content { max-width: 100%; }
+    .sustain-layout { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: 1fr; }
+    .app-layout { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .phone-mockup { display: none; }
+    .testimonials-track { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    :root { --section-gap: 72px; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column;
+      position: absolute; top: 72px; left: 0; right: 0;
+      background: rgba(10,22,40,0.97); backdrop-filter: blur(20px);
+      padding: 20px 5%; gap: 20px; border-bottom: 1px solid var(--light-border);
+    }
+    .nav-mobile-toggle { display: flex; }
+    .hero-stats { flex-direction: column; gap: 24px; }
+    .steps-container { flex-direction: column; }
+    .step { border-right: none; border-bottom: 1px solid var(--light-border); }
+    .step:last-child { border-bottom: none; }
+    .testimonials-track { grid-template-columns: 1fr; }
+    .sustain-metrics { grid-template-columns: 1fr 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .tech-features { grid-template-columns: 1fr; }
+  }
+
+  /* Scroll animations */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <div class="nav-logo-icon">N</div>
+    <span class="nav-logo-text">NiCE <span>Utility</span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#tariffs">Tariffs</a></li>
+    <li><a href="#sustainability">Sustainability</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <div class="nav-mobile-toggle" id="mobileToggle" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Now serving 1.2 million UK homes &amp; businesses
+    </div>
+    <h1>
+      Energy that's<br>
+      <em>smarter,</em><br>
+      <span class="green">greener</span> &amp; fairer.
+    </h1>
+    <p class="hero-sub">
+      NiCE Utility brings intelligent energy management and sustainable power to homes and businesses across the United Kingdom — backed by AI-driven efficiency and a 100% renewable commitment by 2030.
+    </p>
+    <div class="hero-actions">
+      <a href="#tariffs" class="btn-primary">
+        View Tariffs
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#about" class="btn-secondary">Learn More</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">100<span>%</span></div>
+        <div class="hero-stat-label">Renewable electricity</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">£240</div>
+        <div class="hero-stat-label">Avg. annual saving</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4.8<span>★</span></div>
+        <div class="hero-stat-label">Trustpilot rating</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+        <span style="font-family:var(--font-head);font-weight:700;font-size:15px;">Energy Dashboard</span>
+        <div class="live-badge"><div class="live-dot"></div> Live</div>
+      </div>
+      <div class="gauge-row">
+        <span class="gauge-row-label">Current Usage</span>
+        <span class="gauge-row-val" style="color:var(--electric)">2.4 kW</span>
+      </div>
+      <div class="energy-gauge-bar">
+        <div class="energy-gauge-fill" style="width:38%;background:var(--electric)"></div>
+      </div>
+      <div class="gauge-row">
+        <span class="gauge-row-label">Today's Cost</span>
+        <span class="gauge-row-val" style="color:var(--white)">£1.82</span>
+      </div>
+      <div class="gauge-row" style="margin-top:4px;">
+        <span class="gauge-row-label">Carbon Offset</span>
+        <span class="gauge-row-val" style="color:var(--green)">0.8 kg CO₂e saved</span>
+      </div>
+      <div class="mini-chart">
+        <div class="mini-bar" style="height:30%"></div>
+        <div class="mini-bar" style="height:55%"></div>
+        <div class="mini-bar" style="height:40%"></div>
+        <div class="mini-bar" style="height:70%"></div>
+        <div class="mini-bar active" style="height:45%"></div>
+        <div class="mini-bar" style="height:60%"></div>
+        <div class="mini-bar" style="height:38%"></div>
+        <div class="mini-bar" style="height:80%"></div>
+        <div class="mini-bar active" style="height:50%"></div>
+        <div class="mini-bar" style="height:35%"></div>
+        <div class="mini-bar active" style="height:65%"></div>
+        <div class="mini-bar" style="height:42%"></div>
+      </div>
+    </div>
+    <div class="hero-visual-card" style="display:flex;gap:16px;align-items:center;">
+      <div style="font-size:28px;">⚡</div>
+      <div>
+        <div style="font-family:var(--font-head);font-weight:700;font-size:15px;margin-bottom:4px;">Smart Switching</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);">Auto-optimised to the cheapest green tariff. Zero effort.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <span class="trust-label">Trusted by businesses across the UK</span>
+  <div class="trust-logos">
+    <span class="trust-logo">NHS Supply Chain</span>
+    <span class="trust-logo">Transport for London</span>
+    <span class="trust-logo">Network Rail</span>
+    <span class="trust-logo">Tesco Plc</span>
+    <span class="trust-logo">Barclays</span>
+    <span class="trust-logo">Unilever UK</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="reveal">
+    <span class="section-tag">What we offer</span>
+    <h2 class="section-head">Complete energy &amp;<br>utility solutions</h2>
+    <p class="section-sub">From home electricity to large-scale commercial water management, NiCE Utility covers every aspect of your energy needs — intelligently.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon" style="background:rgba(0,194,255,0.12);">⚡</div>
+      <h3>Electricity Supply</h3>
+      <p>100% renewable electricity sourced from UK wind, solar and hydro. Fixed and variable tariffs for homes and businesses of all sizes.</p>
+      <a href="#tariffs" class="link">Explore plans <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon" style="background:rgba(255,140,50,0.12);">🔥</div>
+      <h3>Gas &amp; Heating</h3>
+      <p>Reliable gas supply paired with smart boiler controls and heat pump integration for maximum comfort and minimum waste.</p>
+      <a href="#contact" class="link">Get a quote <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon" style="background:rgba(0,214,143,0.12);">🌊</div>
+      <h3>Water Services</h3>
+      <p>Metered water supply with real-time leak detection and conservation analytics — reducing your bills and environmental impact.</p>
+      <a href="#contact" class="link">Learn more <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon" style="background:rgba(130,100,255,0.12);">☀️</div>
+      <h3>Solar &amp; Battery</h3>
+      <p>Home and commercial solar installation with Tesla Powerwall and NiCE BatteryPack storage. Generate, store and sell back to the grid.</p>
+      <a href="#contact" class="link">Book survey <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon" style="background:rgba(0,194,255,0.12);">🚗</div>
+      <h3>EV Charging</h3>
+      <p>Smart home EV chargers with off-peak scheduling. Nationwide rapid charge network with 4,200+ NiCE charge points across the UK.</p>
+      <a href="#contact" class="link">Find chargers <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-icon" style="background:rgba(255,180,0,0.10);">📊</div>
+      <h3>Business Energy</h3>
+      <p>Half-hourly settlement, demand response programmes, and dedicated account managers for commercial and industrial customers.</p>
+      <a href="#contact" class="link">Talk to sales <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div style="text-align:center;margin-bottom:56px;" class="reveal">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-head">Switch in minutes,<br>save for years</h2>
+  </div>
+  <div class="steps-container reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Get a personalised quote</h3>
+      <p>Enter your address and current usage. Our AI scans 200+ tariffs and recommends the best match for your home or business within 30 seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>We handle the switch</h3>
+      <p>No engineer visit required in most cases. NiCE Utility manages the transfer from your current supplier completely — no downtime, no hassle.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Activate your smart meter</h3>
+      <p>Your existing or newly installed SMETS2 smart meter syncs with the NiCE app for real-time monitoring, alerts and automated reporting.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Optimise &amp; save</h3>
+      <p>Our AI continually spots savings opportunities, flags unusual usage and switches you to a better tariff if one becomes available. Automatically.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFFS -->
+<section id="tariffs">
+  <div class="reveal">
+    <span class="section-tag">Pricing</span>
+    <h2 class="section-head">Straightforward tariffs.<br>No hidden charges.</h2>
+    <p class="section-sub">All prices include VAT. No exit fees on rolling plans. Rates shown are illustrative — your actual rate depends on location and usage profile.</p>
+  </div>
+  <div class="tariffs-grid">
+    <div class="tariff-card reveal reveal-delay-1">
+      <div class="tariff-name">Flex</div>
+      <div class="tariff-desc">A rolling variable tariff. No contract, no exit fees. Switch whenever you like.</div>
+      <div class="tariff-price">
+        <div class="tariff-price-num"><sup>p</sup>27.4<sup style="font-size:14px;vertical-align:super">/kWh</sup></div>
+        <div class="tariff-price-period">+ 52p/day standing charge</div>
+      </div>
+      <ul class="tariff-features">
+        <li>No exit fees</li>
+        <li>Smart meter included</li>
+        <li>NiCE app access</li>
+        <li>100% renewable electricity</li>
+      </ul>
+      <a href="#contact" class="tariff-cta">Start on Flex</a>
+    </div>
+    <div class="tariff-card featured reveal reveal-delay-2">
+      <div class="tariff-badge">Most Popular</div>
+      <div class="tariff-name">Fixed 12</div>
+      <div class="tariff-desc">Lock in a competitive rate for 12 months. Ideal for budgeting certainty.</div>
+      <div class="tariff-price">
+        <div class="tariff-price-num"><sup>p</sup>24.6<sup style="font-size:14px;vertical-align:super">/kWh</sup></div>
+        <div class="tariff-price-period">+ 48p/day standing charge · 12-month fix</div>
+      </div>
+      <ul class="tariff-features">
+        <li>Price fixed for 12 months</li>
+        <li>Smart meter included</li>
+        <li>NiCE app + bill insights</li>
+        <li>100% renewable electricity</li>
+        <li>Priority customer support</li>
+      </ul>
+      <a href="#contact" class="tariff-cta">Get Fixed 12</a>
+    </div>
+    <div class="tariff-card reveal reveal-delay-3">
+      <div class="tariff-name">Smart Off-Peak</div>
+      <div class="tariff-desc">Pay less at night. Perfect for EV owners and homes with smart appliances.</div>
+      <div class="tariff-price">
+        <div class="tariff-price-num"><sup>p</sup>15.2<sup style="font-size:14px;vertical-align:super">/kWh</sup></div>
+        <div class="tariff-price-period">off-peak (11pm–7am) · 31p/kWh peak</div>
+      </div>
+      <ul class="tariff-features">
+        <li>Ultra-low overnight rate</li>
+        <li>SMETS2 smart meter required</li>
+        <li>EV smart charging included</li>
+        <li>100% renewable electricity</li>
+        <li>NiCE app automation</li>
+      </ul>
+      <a href="#contact" class="tariff-cta">Go Smart</a>
+    </div>
+    <div class="tariff-card reveal reveal-delay-1">
+      <div class="tariff-name">Business Pro</div>
+      <div class="tariff-desc">Bespoke pricing for commercial accounts over 100,000 kWh/year.</div>
+      <div class="tariff-price">
+        <div class="tariff-price-num" style="font-size:28px;letter-spacing:-1px;">Bespoke</div>
+        <div class="tariff-price-period">Half-hourly metering available</div>
+      </div>
+      <ul class="tariff-features">
+        <li>Dedicated account manager</li>
+        <li>Demand response options</li>
+        <li>Power purchase agreements</li>
+        <li>Net-zero pathway reporting</li>
+        <li>Priority grid connection support</li>
+      </ul>
+      <a href="#contact" class="tariff-cta">Contact Sales</a>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section id="sustainability" class="sustain-section">
+  <div class="sustain-layout">
+    <div class="sustain-text reveal">
+      <span class="section-tag">Sustainability</span>
+      <h2 class="section-head">Powering a<br><span style="color:var(--green)">net-zero</span> Britain</h2>
+      <p class="section-sub" style="margin-bottom:24px;">Our commitment goes beyond selling green energy. We invest directly in UK renewable generation, fund community energy projects, and are on track for net-zero operations by 2028.</p>
+      <div class="progress-items">
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-name">Renewable electricity sourced</span><span class="progress-pct">100%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="bar1" style="width:0%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-name">Carbon offset of operations</span><span class="progress-pct">87%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="bar2" style="width:0%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-name">Fleet electrification</span><span class="progress-pct">64%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="bar3" style="width:0%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-name">Scope 3 emissions reduction</span><span class="progress-pct">41%</span></div>
+          <div class="progress-track"><div class="progress-fill" id="bar4" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="sustain-metrics reveal reveal-delay-2">
+      <div class="sustain-metric">
+        <div class="sustain-metric-num">6.2GW</div>
+        <div class="sustain-metric-label">Renewable capacity under contract</div>
+      </div>
+      <div class="sustain-metric">
+        <div class="sustain-metric-num">842k</div>
+        <div class="sustain-metric-label">Tonnes CO₂ avoided in 2024</div>
+      </div>
+      <div class="sustain-metric">
+        <div class="sustain-metric-num">£48M</div>
+        <div class="sustain-metric-label">Invested in UK green infrastructure</div>
+      </div>
+      <div class="sustain-metric">
+        <div class="sustain-metric-num">2028</div>
+        <div class="sustain-metric-label">Target year for net-zero operations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECHNOLOGY -->
+<section id="technology">
+  <div class="tech-grid">
+    <div>
+      <div class="reveal">
+        <span class="section-tag">Smart Technology</span>
+        <h2 class="section-head">AI that works as hard as you do</h2>
+        <p class="section-sub" style="margin-bottom:0;">The NiCE Intelligence Platform monitors your energy 24/7, predicts usage patterns, detects anomalies and continuously optimises your costs — all without lifting a finger.</p>
+      </div>
+      <div class="tech-features">
+        <div class="tech-feature reveal reveal-delay-1">
+          <div class="tech-feature-icon">🤖</div>
+          <h4>AI Cost Optimiser</h4>
+          <p>Learns your usage patterns and auto-schedules heavy loads during cheapest tariff windows.</p>
+        </div>
+        <div class="tech-feature reveal reveal-delay-2">
+          <div class="tech-feature-icon">🔍</div>
+          <h4>Anomaly Detection</h4>
+          <p>Spots leaks, faults and unusual spikes before they become expensive problems.</p>
+        </div>
+        <div class="tech-feature reveal reveal-delay-1">
+          <div class="tech-feature-icon">📱</div>
+          <h4>Real-Time App</h4>
+          <p>Half-hourly breakdowns, carbon tracking, bill forecasting and instant alerts on iOS &amp; Android.</p>
+        </div>
+        <div class="tech-feature reveal reveal-delay-2">
+          <div class="tech-feature-icon">🏠</div>
+          <h4>Smart Home Integration</h4>
+          <p>Native support for Google Home, Amazon Alexa, Nest, Hive and most major smart home platforms.</p>
+        </div>
+        <div class="tech-feature reveal reveal-delay-1">
+          <div class="tech-feature-icon">⚖️</div>
+          <h4>Grid Flexibility</h4>
+          <p>Earn money by letting NiCE balance the grid using your battery or EV during peak demand events.</p>
+        </div>
+        <div class="tech-feature reveal reveal-delay-2">
+          <div class="tech-feature-icon">📋</div>
+          <h4>Net-Zero Reporting</h4>
+          <p>Automated Scope 1, 2 &amp; 3 carbon reports in SECR and CDP formats for businesses.</p>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="tech-dashboard">
+        <div class="dash-row">
+          <span class="dash-title">NiCE Intelligence</span>
+          <span class="dash-time">Live · Now</span>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-val" style="color:var(--electric)">£1.47</div>
+          <div class="dash-metric-sub">Today's energy spend · 19% below avg</div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">Usage by source — today</div>
+        <div class="dash-bar-group">
+          <div class="dash-bar-label"><span>Wind</span><span style="color:var(--green)">58%</span></div>
+          <div class="dash-bar-track"><div class="dash-bar-fill" style="width:58%;background:var(--green)"></div></div>
+        </div>
+        <div class="dash-bar-group">
+          <div class="dash-bar-label"><span>Solar</span><span style="color:#FFD700">24%</span></div>
+          <div class="dash-bar-track"><div class="dash-bar-fill" style="width:24%;background:#FFD700"></div></div>
+        </div>
+        <div class="dash-bar-group">
+          <div class="dash-bar-label"><span>Hydro</span><span style="color:var(--electric)">18%</span></div>
+          <div class="dash-bar-track"><div class="dash-bar-fill" style="width:18%;background:var(--electric)"></div></div>
+        </div>
+        <div class="divider"></div>
+        <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Smart recommendations</div>
+        <div style="background:rgba(0,214,143,0.08);border:1px solid rgba(0,214,143,0.15);border-radius:8px;padding:12px;margin-bottom:10px;">
+          <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:4px;">💡 Shift dishwasher to 11:30pm</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Save ~14p tonight on off-peak rate</div>
+        </div>
+        <div style="background:rgba(0,194,255,0.06);border:1px solid rgba(0,194,255,0.12);border-radius:8px;padding:12px;">
+          <div style="font-size:12px;font-weight:600;color:var(--electric);margin-bottom:4px;">🚗 EV fully charged by 7am</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);">Auto-scheduled for cheapest overnight window</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="about" style="background:rgba(255,255,255,0.015);border-top:1px solid var(--light-border);border-bottom:1px solid var(--light-border);">
+  <div style="text-align:center;margin-bottom:56px;" class="reveal">
+    <span class="section-tag">Customer stories</span>
+    <h2 class="section-head">Trusted by over 1.2 million<br>homes &amp; businesses</h2>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Switching to NiCE Utility took about 10 minutes. Within a week I had the app set up, and I could see exactly where my energy was going. My bills dropped by nearly £30 a month."</p>
+      <div class="testimonial-author">
+        <div class="avatar" style="background:rgba(0,194,255,0.15);color:var(--electric);">SJ</div>
+        <div>
+          <div class="testimonial-name">Sarah J.</div>
+          <div class="testimonial-role">Homeowner, Manchester</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The Business Pro tariff and dedicated account manager have been transformative. We've cut our Scope 2 emissions by 40% and the reporting makes our ESG disclosures effortless."</p>
+      <div class="testimonial-author">
+        <div class="avatar" style="background:rgba(0,214,143,0.15);color:var(--green);">MT</div>
+        <div>
+          <div class="testimonial-name">Marcus T.</div>
+          <div class="testimonial-role">Head of Facilities, Leeds</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-3">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The Smart Off-Peak tariff combined with my EV is a game-changer. I charge the car every night for about £2. Customer support is brilliant too — always pick up within 2 minutes."</p>
+      <div class="testimonial-author">
+        <div class="avatar" style="background:rgba(160,100,255,0.15);color:#C088FF;">AP</div>
+        <div>
+          <div class="testimonial-name">Amara P.</div>
+          <div class="testimonial-role">EV owner, Bristol</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP SECTION -->
+<section id="app" class="app-section">
+  <div class="app-layout">
+    <div class="reveal">
+      <span class="section-tag">NiCE App</span>
+      <h2 class="section-head">Your energy,<br>in your pocket</h2>
+      <p class="section-sub">Monitor usage, track your carbon footprint, pay bills and get AI-powered tips — all in the NiCE Utility app. Rated 4.9 on the App Store.</p>
+      <div class="app-features">
+        <div class="app-feature">
+          <div class="app-feature-icon">⚡</div>
+          <div class="app-feature-text">
+            <h4>Real-time usage data</h4>
+            <p>Half-hourly breakdowns updated live from your smart meter.</p>
+          </div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-icon">💬</div>
+          <div class="app-feature-text">
+            <h4>AI energy advisor</h4>
+            <p>Ask anything about your bill, usage or switching — answered instantly.</p>
+          </div>
+        </div>
+        <div class="app-feature">
+          <div class="app-feature-icon">🔔</div>
+          <div class="app-feature-text">
+            <h4>Instant alerts</h4>
+            <p>Get notified the moment unusual usage or a potential fault is detected.</p>
+          </div>
+        </div>
+      </div>
+      <div class="app-store-btns">
+        <a href="#" class="app-store-btn">
+          <div class="app-store-btn-icon">🍎</div>
+          <div class="app-store-btn-text">Download on the<strong>App Store</strong></div>
+        </a>
+        <a href="#" class="app-store-btn">
+          <div class="app-store-btn-icon">▶</div>
+          <div class="app-store-btn-text">Get it on<strong>Google Play</strong></div>
+        </a>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-notch"></div>
+          <div class="phone-metric">
+            <div class="phone-metric-label">Today's usage</div>
+            <div class="phone-metric-val">8.4 <span class="unit">kWh</span></div>
+            <div class="chip">↓ 12% vs avg</div>
+          </div>
+          <div class="phone-chart">
+            <div class="phone-bar" style="height:40%;background:rgba(0,194,255,0.30)"></div>
+            <div class="phone-bar" style="height:65%;background:rgba(0,194,255,0.30)"></div>
+            <div class="phone-bar" style="height:30%;background:rgba(0,194,255,0.30)"></div>
+            <div class="phone-bar" style="height:80%;background:rgba(0,194,255,0.50)"></div>
+            <div class="phone-bar" style="height:55%;background:var(--electric)"></div>
+            <div class="phone-bar" style="height:45%;background:rgba(0,194,255,0.30)"></div>
+            <div class="phone-bar" style="height:70%;background:rgba(0,194,255,0.30)"></div>
+          </div>
+          <div class="phone-item">
+            <span class="phone-item-label">Est. monthly bill</span>
+            <span class="phone-item-val">£68.40</span>
+          </div>
+          <div class="phone-item">
+            <span class="phone-item-label">Carbon this month</span>
+            <span class="phone-item-val" style="color:var(--green)">0 kg CO₂</span>
+          </div>
+          <div class="phone-item">
+            <span class="phone-item-label">Grid source</span>
+            <span class="phone-item-val" style="color:var(--green)">100% Wind</span>
+          </div>
+          <div style="margin-top:14px;">
+            <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;">AI Tip</div>
+            <div style="background:rgba(0,214,143,0.08);border:1px solid rgba(0,214,143,0.15);border-radius:8px;padding:10px;font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5;">
+              🌙 Run washing machine after 11pm tonight and save 38p
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div style="max-width:720px;margin:0 auto;text-align:center;" class="reveal">
+    <span class="section-tag">Get Started</span>
+    <h2 class="section-head">Ready to switch to<br>smarter energy?</h2>
+    <p class="section-sub" style="margin-left:auto;margin-right:auto;">Enter your postcode to get a personalised quote in under 30 seconds. No commitment. No credit check. No nonsense.</p>
+    <div style="display:flex;gap:12px;max-width:480px;margin:0 auto 20px;" class="reveal reveal-delay-1">
+      <input type="text" placeholder="e.g. EC1A 1BB" style="flex:1;padding:14px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:var(--white);font-size:15px;font-family:var(--font-body);outline:none;" onfocus="this.style.borderColor='var(--electric)'" onblur="this.style.borderColor='rgba(255,255,255,0.15)'">
+      <a href="#" class="btn-primary" style="white-space:nowrap;">Get Quote</a>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,0.35);">Or call us free: <a href="tel:08001234567" style="color:var(--electric)">0800 123 4567</a> · Available 8am–8pm Mon–Fri</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-logo">
+        <div class="nav-logo-icon">N</div>
+        <span class="nav-logo-text">NiCE <span>Utility</span></span>
+      </div>
+      <p>Powering smarter, greener homes and businesses across the United Kingdom. Authorised and regulated by Ofgem.</p>
+      <div class="social-links">
+        <a href="#" class="social-link">𝕏</a>
+        <a href="#" class="social-link">in</a>
+        <a href="#" class="social-link">f</a>
+        <a href="#" class="social-link">▶</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Services</h5>
+      <ul>
+        <li><a href="#">Electricity</a></li>
+        <li><a href="#">Gas &amp; Heating</a></li>
+        <li><a href="#">Water</a></li>
+        <li><a href="#">Solar &amp; Battery</a></li>
+        <li><a href="#">EV Charging</a></li>
+        <li><a href="#">Business Energy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Tariffs</h5>
+      <ul>
+        <li><a href="#">Flex Tariff</a></li>
+        <li><a href="#">Fixed 12</a></li>
+        <li><a href="#">Smart Off-Peak</a></li>
+        <li><a href="#">Business Pro</a></li>
+        <li><a href="#">Green Tracker</a></li>
+        <li><a href="#">Compare Plans</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">About NiCE Utility</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Newsroom</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Investors</a></li>
+        <li><a href="#">Partners</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Support</h5>
+      <ul>
+        <li><a href="#">Help Centre</a></li>
+        <li><a href="#">Submit a Reading</a></li>
+        <li><a href="#">Moving Home</a></li>
+        <li><a href="#">Vulnerable Customers</a></li>
+        <li><a href="#">Complaints</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 NiCE Utility Ltd. Registered in England &amp; Wales No. 14823910. Authorised by Ofgem.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms &amp; Conditions</a>
+      <a href="#">Cookie Settings</a>
+      <a href="#">Accessibility</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Animate progress bars
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        document.getElementById('bar1').style.width = '100%';
+        document.getElementById('bar2').style.width = '87%';
+        document.getElementById('bar3').style.width = '64%';
+        document.getElementById('bar4').style.width = '41%';
+        barObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  const sustain = document.getElementById('sustainability');
+  if (sustain) barObserver.observe(sustain);
+
+  // Navbar transparency on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(10,22,40,0.97)';
+    } else {
+      nav.style.background = 'rgba(10,22,40,0.85)';
+    }
+  });
+</script>
+
+</body>
+</html>
